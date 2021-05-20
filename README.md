@@ -1,16 +1,5 @@
-# notes
+#Ignite - Chapter I - Módulo 2 - Aplicação Notes
+Aplicação de anotações para auxiliar no prosseguimento do curso.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+##Trilha Flutter
+Este é um projeto feito durante a trilha de Flutter do curso Ignite da RocketSeat.
