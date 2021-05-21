@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes/create_note_page.dart';
 import 'home_page.dart';
 
 class AppWidget extends StatelessWidget {
@@ -6,7 +7,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Notes',
-      home: HomePage(),
+      home: CreateNotePage(),
     );
   }
 }

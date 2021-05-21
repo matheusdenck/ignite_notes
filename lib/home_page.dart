@@ -1,24 +1,42 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  var notes = <String>["Primeiro Item"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notes'),
+        title: Text('NOTES'),
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Teste 1'),
-            SizedBox(
-              height: 30,
-            ),
-            Text('Teste 2'),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (var i = 0; i < notes.length; i++)
+                Card(
+                  child: ListTile(
+                    title: Center(
+                      child: Text(notes[i]),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          notes.add("Item ${notes.length}");
+          setState(() {});
+        },
       ),
     );
   }
