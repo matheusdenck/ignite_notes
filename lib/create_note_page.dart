@@ -7,18 +7,39 @@ class CreateNotePage extends StatefulWidget {
 
 class _CreateNotePageState extends State<CreateNotePage> {
   var description = '';
+  var textController = TextEditingController();
+  var isEdit = false;
+
+  @override
+  void initState() {
+    //esse método serve para esperar o primeiro build, gerando o context necessário para o funcionamento do if abaixo
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      //se a rota do contexto contem algum argumentos, ou seja, está retornando alguma variável, description recebe esta variável como uma String
+      if (ModalRoute.of(context)!.settings.arguments != null) {
+        description = ModalRoute.of(context)!.settings.arguments as String;
+        textController.text = description;
+        setState(() {
+          isEdit = true;
+        });
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Note'),
+        title: Text(isEdit ? 'Edit Note' : 'Create Note'),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {},
-          )
+          if (isEdit)
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                Navigator.pop(context, '');
+              },
+            )
         ],
       ),
       body: Padding(
@@ -27,6 +48,7 @@ class _CreateNotePageState extends State<CreateNotePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextField(
+              controller: textController,
               maxLines: null,
               onChanged: (value) {
                 setState(() {
