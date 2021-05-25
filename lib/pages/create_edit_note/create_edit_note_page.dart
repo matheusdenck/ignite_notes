@@ -29,6 +29,7 @@ class _CreateNotePageState extends State<CreateNotePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.teal[100],
       appBar: AppBar(
         title: Text(isEdit ? 'Edit Note' : 'Create Note'),
         centerTitle: true,
@@ -57,6 +58,7 @@ class _CreateNotePageState extends State<CreateNotePage> {
               },
               decoration: InputDecoration(
                 labelText: 'Descrição',
+                labelStyle: TextStyle(color: Colors.teal),
               ),
             ),
             SizedBox(

@@ -12,6 +12,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.teal[100],
       appBar: AppBar(
         title: Text('NOTES'),
         centerTitle: true,
@@ -21,41 +22,49 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               for (var i = 0; i < notes.length; i++)
-                Card(
-                  child: ListTile(
-                    title: Center(
-                      child: Text(notes[i]),
-                    ),
-                    onTap: () async {
-                      var response = await Navigator.pushNamed(
-                          context, '/create-note',
-                          arguments: notes[i]);
-                      if (response != null) {
-                        var description = response as String;
-                        if (response.isEmpty) {
-                          notes.removeAt(i);
-                        } else {
-                          notes[i] = description;
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Card(
+                    child: ListTile(
+                      title: Center(
+                        child: Text(notes[i]),
+                      ),
+                      onTap: () async {
+                        var response = await Navigator.pushNamed(
+                            context, '/create-note',
+                            arguments: notes[i]);
+                        if (response != null) {
+                          var description = response as String;
+                          if (response.isEmpty) {
+                            notes.removeAt(i);
+                          } else {
+                            notes[i] = description;
+                          }
+                          setState(() {});
                         }
-                        setState(() {});
-                      }
-                    },
+                      },
+                    ),
                   ),
                 ),
             ],
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () async {
-          var description = await Navigator.pushNamed(context, '/create-note');
-          if (description != null) {
-            setState(() {
-              notes.add(description as String);
-            });
-          }
-        },
+      floatingActionButton: SizedBox(
+        width: 60,
+        height: 60,
+        child: ElevatedButton(
+          child: Icon(Icons.add_box_outlined),
+          onPressed: () async {
+            var description =
+                await Navigator.pushNamed(context, '/create-note');
+            if (description != null) {
+              setState(() {
+                notes.add(description as String);
+              });
+            }
+          },
+        ),
       ),
     );
   }
