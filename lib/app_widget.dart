@@ -6,6 +6,9 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
       title: 'Notes',
       //a primeira rota default do flutter é a rota '/', para modificar isso tem a propriedade initialRoute
       initialRoute: '/home',
