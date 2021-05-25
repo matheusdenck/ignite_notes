@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'create_note_page.dart';
+import '../create_edit_note/create_edit_note_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
