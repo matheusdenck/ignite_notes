@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../create_edit_note/create_edit_note_page.dart';
+import 'package:get_it/get_it.dart';
+import 'package:notes/shared/auth/auth_controller.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,20 +8,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var notes = <String>["Primeiro Item"];
+  List<String> notes = <String>['Primeiro Item'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal[100],
       appBar: AppBar(
-        title: Text('NOTES'),
+        title: const Text('NOTES'),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            GetIt.I.get<AuthController>().logoutUser();
+          },
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
-            children: [
-              for (var i = 0; i < notes.length; i++)
+            children: <Widget>[
+              for (int i = 0; i < notes.length; i++)
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Card(
@@ -30,18 +36,21 @@ class _HomePageState extends State<HomePage> {
                         child: Text(notes[i]),
                       ),
                       onTap: () async {
-                        var response = await Navigator.pushNamed(
-                            context, '/create-note',
-                            arguments: notes[i]);
-                        if (response != null) {
-                          var description = response as String;
-                          if (response.isEmpty) {
-                            notes.removeAt(i);
-                          } else {
-                            notes[i] = description;
-                          }
-                          setState(() {});
-                        }
+                        await Navigator.pushNamed(context, '/create-note',
+                                arguments: notes[i])
+                            .then(
+                          (dynamic value) {
+                            if (value != null) {
+                              String description = value as String;
+                              if (value.isEmpty) {
+                                notes.removeAt(i);
+                              } else {
+                                notes[i] = description;
+                              }
+                              setState(() {});
+                            }
+                          },
+                        );
                       },
                     ),
                   ),
@@ -54,15 +63,19 @@ class _HomePageState extends State<HomePage> {
         width: 60,
         height: 60,
         child: ElevatedButton(
-          child: Icon(Icons.add_box_outlined),
+          child: const Icon(Icons.add_box_outlined),
           onPressed: () async {
-            var description =
-                await Navigator.pushNamed(context, '/create-note');
-            if (description != null) {
-              setState(() {
-                notes.add(description as String);
-              });
-            }
+            await Navigator.pushNamed(context, '/create-note').then(
+              (dynamic value) {
+                if (value != null) {
+                  setState(
+                    () {
+                      notes.add(value as String);
+                    },
+                  );
+                }
+              },
+            );
           },
         ),
       ),
